@@ -1,40 +1,23 @@
 #include <Arduino.h>
-#include <Adafruit_NeoPixel.h>
+#include <TFT_eSPI.h>
 
-#define RGB_LED_PIN 48
-#define LED_COUNT 1
-
-Adafruit_NeoPixel rgb(
-    LED_COUNT,
-    RGB_LED_PIN,
-    NEO_GRB + NEO_KHZ800
-);
+TFT_eSPI tft = TFT_eSPI();
 
 void setup() {
-    rgb.begin();
-    rgb.setBrightness(40);
-    rgb.clear();
-    rgb.show();
+    Serial.begin(115200);
+
+    tft.init();
+    tft.setRotation(0);
+    tft.fillScreen(TFT_BLACK);
+
+    // Border
+    tft.drawRect(0, 0, 240, 240, TFT_WHITE);
+
+    // Hello World
+    tft.setTextColor(TFT_GREEN, TFT_BLACK);
+    tft.setTextDatum(MC_DATUM);
+    tft.drawString("Hello World!", 120, 120, 4);
 }
 
 void loop() {
-    // Red
-    rgb.setPixelColor(0, rgb.Color(255, 0, 0));
-    rgb.show();
-    delay(1000);
-
-    // Green
-    rgb.setPixelColor(0, rgb.Color(0, 255, 0));
-    rgb.show();
-    delay(1000);
-
-    // Blue
-    rgb.setPixelColor(0, rgb.Color(0, 0, 255));
-    rgb.show();
-    delay(1000);
-
-    // Off
-    rgb.clear();
-    rgb.show();
-    delay(1000);
 }
